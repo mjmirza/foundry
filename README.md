@@ -2,8 +2,6 @@
   <img src="https://raw.githubusercontent.com/mjmirza/foundry/main/assets/logo.png" alt="Foundry" height="96" />
 </p>
 
-<h1 align="center">Foundry</h1>
-
 <p align="center">The agent skill that makes any AI coding assistant an expert at building agentic tooling.</p>
 
 <p align="center">
