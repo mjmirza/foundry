@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="460" height="96" viewBox="0 0 460 96" role="img" aria-label="Foundry">
+  <rect x="8" y="8" width="80" height="80" rx="18" fill="#B45309"/>
+  <rect x="8" y="8" width="80" height="80" rx="18" fill="none" stroke="#7C2D12" stroke-width="2"/>
+  <g fill="#FFF7ED" transform="translate(8,8) scale(0.3125)">
+    <path d="M64 116 h128 a8 8 0 0 1 8 8 v6 a18 18 0 0 1 -18 18 h-44 l0 8 h22 a6 6 0 0 1 6 6 v4 H94 v-4 a6 6 0 0 1 6 -6 h22 l0 -8 H82 a18 18 0 0 1 -18 -18 z"/>
+    <path d="M168 96 h26 a6 6 0 0 1 6 6 v8 h-44 a26 26 0 0 1 12 -14 z"/>
+  </g>
+  <text x="108" y="58" font-family="'DejaVu Sans', Verdana, sans-serif" font-size="42" font-weight="700" fill="#B45309" letter-spacing="1">Foundry</text>
+  <text x="110" y="80" font-family="'DejaVu Sans', Verdana, sans-serif" font-size="13" font-weight="400" fill="#7C2D12" letter-spacing="0.5">Build agentic tooling well</text>
+</svg>

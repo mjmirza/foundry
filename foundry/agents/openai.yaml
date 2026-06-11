@@ -1,0 +1,10 @@
+interface:
+  display_name: "Foundry"
+  short_description: "Builds and reviews agentic tooling to best practice."
+  icon_small: "./assets/foundry-icon.svg"
+  icon_large: "./assets/foundry-icon.png"
+  brand_color: "#B45309"
+  default_prompt: "Use $foundry to review my agentic tooling for best practices."
+
+policy:
+  allow_implicit_invocation: true

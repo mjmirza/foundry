@@ -1,0 +1,10 @@
+{
+  "name": "foundry",
+  "version": "0.1.0",
+  "description": "Reviews and builds agentic tooling to best practice. Catches the mistakes AI assistants actually make when writing skills, hooks, MCP servers, subagents, and commands.",
+  "author": { "name": "Mirza Iqbal" },
+  "homepage": "https://github.com/mjmirza/foundry",
+  "repository": "https://github.com/mjmirza/foundry",
+  "license": "MIT",
+  "skills": "./skills/"
+}
