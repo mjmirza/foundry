@@ -19,12 +19,15 @@ foundry/                              repo root
     agents/openai.yaml                Codex config in the agentskills.io format
     assets/                           the square icon
     references/                       the 12 reference files
-    scripts/                          the three linters
-      check-skill.sh check-hook.sh check-mcp.sh
-      tests/run-tests.sh              runs the eval harness
-    evals/                            the harness and its fixtures
-      run-evals.sh
-      fixtures/hooks|skills|mcp/good|bad
+    scripts/                          the four linters plus doctor
+      check-skill.sh check-hook.sh check-mcp.sh check-command.sh doctor.sh
+      tests/run-tests.sh              runs the unit harness and the integration test
+    evals/                            the harness, the integration test, and fixtures
+      run-evals.sh  integration.sh
+      fixtures/hooks|skills|mcp|commands/good|bad
+    commands/foundry-check.md         a slash command that routes to the right linter
+    data/install-paths.json           machine readable per client path map
+    install.sh                        the non destructive installer
     skills/foundry/SKILL.md           skills format, uses CLAUDE_SKILL_DIR paths
     skills/foundry/references         symlink to ../../references
 ```
@@ -39,7 +42,7 @@ The skill body is a thin router. It decides which reference to load for the arti
 
 ## The linters
 
-The three scripts under `scripts/` turn the highest value rules into runnable checks. Each one reads a target, prints findings in the review format, exits 0 when clean, exits 1 on a finding, and fails open when its input cannot be read. The linters follow the same hook standard Foundry teaches, so they are their own first example.
+The four scripts under `scripts/`, check-skill, check-hook, check-mcp, and check-command, turn the highest value rules into runnable checks. Each one reads a target, prints findings in the review format, exits 0 when clean, exits 1 on a finding, and fails open when its input cannot be read. The linters follow the same hook standard Foundry teaches, so they are their own first example.
 
 ## The evals
 

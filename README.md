@@ -8,7 +8,8 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/license-MIT-B45309.svg" alt="MIT License" />
-  <img src="https://img.shields.io/badge/version-0.2.0-7C2D12.svg" alt="Version 0.2.0" />
+  <img src="https://img.shields.io/badge/version-0.3.0-7C2D12.svg" alt="Version 0.3.0" />
+  <img src="https://img.shields.io/badge/tests-35%20checks%20passing-2E7D32.svg" alt="35 checks passing" />
   <img src="https://img.shields.io/badge/format-Agent%20Skill-B45309.svg" alt="Agent Skills format" />
   <img src="https://img.shields.io/badge/works%20with-Claude%20%C2%B7%20Codex%20%C2%B7%20Gemini%20%C2%B7%20Cursor%20%C2%B7%20Cline%20%C2%B7%20Copilot-7C2D12.svg" alt="Works with many assistants" />
 </p>
@@ -63,7 +64,7 @@ Claude Code users can add the marketplace and install the plugin directly.
 /plugin install foundry@foundry
 ```
 
-You can also clone the repository and install it however you prefer.
+You can also clone the repository and run `bash foundry/install.sh --project`, which writes the universal `.agents/skills/foundry` copy that Codex, Gemini, Cursor, and Cline read directly, plus the `.claude/skills/foundry` symlink for Claude Code. It never deletes a file you placed there. Copilot reads AGENTS.md at the repo root rather than the skill format, so Foundry reaches Copilot through AGENTS.md. See `foundry/references/portability.md`.
 
 ## Using Foundry
 
@@ -96,12 +97,24 @@ Use the Foundry skill to check my MCP server setup.
 
 ## What makes Foundry different
 
-- It ships executable linters, not only prose. `check-skill.sh`, `check-hook.sh`, and `check-mcp.sh` catch the common mistakes in your own tooling.
+- It ships executable linters, not only prose. `check-skill.sh`, `check-hook.sh`, `check-mcp.sh`, and `check-command.sh` catch the common mistakes in your own tooling.
 - It ships an eval harness that proves the guidance is enforceable. The linters are run against good and bad fixtures and must catch every bad one and pass every good one.
 - It ships a correct installer and a doctor. install.sh writes the single universal copy and the per assistant symlink without ever clobbering your files, and doctor checks an install is healthy.
 - It is deep tested. An end to end test runs the real install, doctor, and linter commands in sequence and asserts the artifacts they produce, not only that they exit cleanly.
-- It carries a verified install path matrix across assistants, the most reported and least solved problem in the field.
+- It carries a surveyed install path matrix across assistants, the most reported and least solved problem in the field. The machine readable map lives at `foundry/data/install-paths.json`.
 - It is built from real community requests. The reference files answer the open issues and pull requests of the top agent tooling repos, not a guess at what matters.
+
+## Command, hook, or skill
+
+A frequent question when building agent tooling is which shape to use. Foundry's short answer.
+
+| Use a | when |
+|---|---|
+| command | the user triggers an action on purpose, like a review or a ship flow |
+| hook | a behavior must fire automatically on an event, like a check before a push |
+| skill | a body of know how applies when context matches, with references and scripts behind it |
+
+If the user has to remember to run it, it should have been a hook. The full reasoning is in `foundry/references/commands.md`.
 
 ## Run the checks
 
@@ -109,6 +122,7 @@ Use the Foundry skill to check my MCP server setup.
 bash foundry/scripts/check-hook.sh path/to/your/hook.sh
 bash foundry/scripts/check-skill.sh path/to/your/skill-dir
 bash foundry/scripts/check-mcp.sh path/to/your/mcp-config.json
+bash foundry/scripts/check-command.sh path/to/your/command.md
 bash foundry/scripts/doctor.sh                 # health check this checkout or an install
 bash foundry/install.sh --project              # install correctly into the current project
 bash foundry/evals/run-evals.sh                # unit checks, prove the linters work

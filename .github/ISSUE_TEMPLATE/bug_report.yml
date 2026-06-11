@@ -1,0 +1,21 @@
+name: Bug report
+description: Report a defect in the tooling or a linter that returns a wrong result
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: How to reproduce
+      description: The command you ran and what you saw.
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Client and operating system

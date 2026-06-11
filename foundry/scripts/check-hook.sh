@@ -46,6 +46,7 @@ if grep -qE 'tool_input|tool_name' "$file"; then
 fi
 
 # 7. Bare $PWD as a project anchor is fragile in nested invocations.
+# shellcheck disable=SC2016  # the single quotes are the literal grep pattern, intentional
 while IFS=: read -r ln _; do
   report "$ln" "anchors on bare \$PWD. use \${CLAUDE_PROJECT_DIR:-\$PWD} for the project root"
 done < <(grep -nE '\$PWD' "$file" | grep -vE 'CLAUDE_PROJECT_DIR')
