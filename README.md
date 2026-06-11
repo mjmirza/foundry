@@ -9,8 +9,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/license-MIT-B45309.svg" alt="MIT License" />
   <a href="https://www.npmjs.com/package/@nex8n/foundry"><img src="https://img.shields.io/npm/v/@nex8n/foundry.svg?color=B45309" alt="npm @nex8n/foundry" /></a>
-  <img src="https://img.shields.io/badge/version-0.3.0-7C2D12.svg" alt="Version 0.3.0" />
-  <img src="https://img.shields.io/badge/tests-35%20checks%20passing-2E7D32.svg" alt="35 checks passing" />
+  <img src="https://img.shields.io/badge/tests-39%20checks%20passing-2E7D32.svg" alt="39 checks passing" />
   <img src="https://img.shields.io/badge/format-Agent%20Skill-B45309.svg" alt="Agent Skills format" />
   <img src="https://img.shields.io/badge/works%20with-Claude%20%C2%B7%20Codex%20%C2%B7%20Gemini%20%C2%B7%20Cursor%20%C2%B7%20Cline%20%C2%B7%20Copilot-7C2D12.svg" alt="Works with many assistants" />
 </p>
@@ -18,6 +17,32 @@
 Foundry is one installable, portable agent skill that teaches an AI coding assistant to build, review, and harden agentic tooling at a high standard. Skills, hooks, MCP servers, subagents, slash commands, context engineering, settings, and security. It is the full agentic stack, not one framework, and it works across Claude Code, Codex, Gemini CLI, Cursor, Cline, and Copilot.
 
 It is modeled on the dense, anti mistake style of the SwiftUI Agent Skill, and extended into the accumulated practice of the whole field, mined from the real open issues and pull requests of the top agent tooling repos.
+
+## What you get
+
+The install is one line. Here is what that one line buys you.
+
+- **Your assistant builds it right the first time.** When you ask for a hook, a skill, or an MCP server, it writes one that actually fires, instead of one you debug for an hour because the description never triggers or a shell setting swallowed the block.
+- **It catches the mistake while reviewing, yours or the assistant's.** Point a checker at a hook you already have and it tells you the exact line and the rule broken, before that bug reaches a user.
+- **You learn it once and it works everywhere.** The same skill installs correctly into Claude Code, Codex, Gemini, Cursor, Cline, and Copilot, so the lesson carries across every tool you use.
+- **It is honest about your code.** It flags and reports, it never rewrites your working files on its own, and every rule says when not to apply it.
+- **The bugs it prevents are real and specific.** A skill description too vague to ever trigger. A hook whose `set -e` quietly eats its own block. A regex that passes on Linux and fails on a Mac. An MCP server registered in the wrong config file so its tools never appear. Foundry knows each one and the fix.
+
+If you build agent tooling and you are tired of the same class of mistake coming back, that is the time this saves you.
+
+## From install to first win, in three steps
+
+```bash
+# 1. install Foundry into your project
+npx @nex8n/foundry
+
+# 2. point a checker at a hook you already have
+bash foundry/scripts/check-hook.sh path/to/your/hook.sh
+
+# 3. read the finding. it names the file and the rule broken, or says it is clean.
+```
+
+That is the whole loop. You went from nothing to a real review of your own code in three commands. Everything below is depth on top of that.
 
 ## What is this, in plain terms
 
