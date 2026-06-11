@@ -4,6 +4,18 @@ All notable changes to Foundry are recorded here. The format follows Keep a Chan
 
 ## Unreleased
 
+## 0.4.1 (2026-06-11)
+
+### Fixed
+
+- check-docs reported valid heading anchors as broken on any doc with more than one heading. Three bugs combined. The slug list was emitted without newlines so every heading slug ran together, a pipefail plus a grep early exit turned a real match into a failure, and the slug collapsed consecutive dashes while GitHub does not. Anchors are now compared by slugifying both sides through the same function, and the heading lookup uses process substitution so the early exit cannot trip pipefail. Found while adopting the checker into another project, where a long table of contents lit up entirely false.
+- A bare word link target in a syntax example, such as the url in `![alt](url)`, was read as a broken link. A real local link carries an extension or a path separator, so a bare word that does not resolve is now treated as a placeholder.
+
+### Added
+
+- An allow entry ending in a slash in `.docs-orphan-allow` now exempts a whole subtree from the orphan pass, so an archival tree is marked standalone in one line.
+- Regression evals for a valid multi heading table of contents, a placeholder target, and the subtree orphan allow.
+
 ## 0.4.0 (2026-06-11)
 
 ### Added

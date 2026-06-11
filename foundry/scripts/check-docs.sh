@@ -68,7 +68,7 @@ normpath() {
 }
 
 heading_slugs() {
-  strip_all "$1" | grep -E '^#{1,6}[[:space:]]+' | sed -E 's/^#+[[:space:]]+//; s/[[:space:]]+#+[[:space:]]*$//' | while IFS= read -r h; do slugify "$h"; done
+  strip_all "$1" | grep -E '^#{1,6}[[:space:]]+' | sed -E 's/^#+[[:space:]]+//; s/[[:space:]]+#+[[:space:]]*$//' | while IFS= read -r h; do slugify "$h"; printf '\n'; done
 }
 
 # Only real markdown links and images, after stripping fenced and inline code.
@@ -95,7 +95,12 @@ while IFS= read -r f; do
       '#'*)
         anchor="${t#\#}"
         [ -z "$anchor" ] && continue
-        heading_slugs "$f" | grep -Fxq "$anchor" || report "$f" "broken same file anchor, #$anchor"
+        # Normalize the anchor through the same slugify as the headings, so a
+        # consecutive dash difference between our slug and GitHub's cannot cause
+        # a false broken anchor. Process substitution keeps heading_slugs out of
+        # grep's pipeline, so the SIGPIPE that grep -q sends on an early match
+        # cannot trip pipefail and turn a real match into a false report.
+        grep -Fxq "$(slugify "$anchor")" <(heading_slugs "$f") || report "$f" "broken same file anchor, #$anchor"
         continue ;;
       ''|*'$'*|*'<'*|*'>'*|*'path/to'*) continue ;;
     esac
@@ -105,12 +110,19 @@ while IFS= read -r f; do
     [ -z "$file" ] && continue
     target="$(normpath "$fdir/$file")"
     if [ ! -e "$target" ]; then
-      report "$f" "broken link, target not found, $file"
+      # A real local link carries an extension or a path separator. A bare single
+      # word that does not resolve, such as url or alt, is a placeholder in a
+      # syntax example, not a broken link, so do not report it.
+      case "$file" in
+        *.*|*/*) report "$f" "broken link, target not found, $file" ;;
+      esac
       continue
     fi
     printf '%s\n' "$target" >> "$tmp/linked"
-    if [ -n "$anchor" ] && printf '%s' "$file" | grep -qE '\.md$'; then
-      heading_slugs "$target" | grep -Fxq "$anchor" || report "$f" "broken anchor, #$anchor not in $file"
+    if [ -n "$anchor" ]; then
+      case "$file" in
+        *.md) grep -Fxq "$(slugify "$anchor")" <(heading_slugs "$target") || report "$f" "broken anchor, #$anchor not in $file" ;;
+      esac
     fi
   done < <(extract_targets "$f")
 done < "$tmp/mdlist"
@@ -131,6 +143,17 @@ if [ "$no_orphans" -eq 0 ]; then
     case "$f" in */.github/*|*/commands/*|*/evals/*|*/fixtures/*) continue ;; esac
     grep -Fxq "$rel" "$tmp/allow" && continue
     grep -Fxq "$base" "$tmp/allow" && continue
+    # An allow entry ending in a slash exempts a whole subtree, so a repo can
+    # mark an archival tree such as audits/ or plans/ as intentionally standalone
+    # in one line rather than listing every dated file.
+    exempt=0
+    while IFS= read -r ad; do
+      case "$ad" in
+        ''|'#'*) continue ;;
+        */) case "$rel" in "$ad"*) exempt=1; break ;; esac ;;
+      esac
+    done < "$tmp/allow"
+    [ "$exempt" -eq 1 ] && continue
 
     # A real markdown link resolving to this file makes it reachable. This is the
     # precise signal and covers a bare same dir link like guide.md.
@@ -144,7 +167,7 @@ if [ "$no_orphans" -eq 0 ]; then
     reachable=0
     while IFS= read -r g; do
       [ "$g" = "$f" ] && continue
-      if strip_fences "$g" | grep -Fq "$key"; then reachable=1; break; fi
+      if grep -Fq "$key" <(strip_fences "$g"); then reachable=1; break; fi
     done < "$tmp/mdlist"
     [ "$reachable" -eq 0 ] && report "$f" "orphan doc, no other doc references $base. link it or add it to .docs-orphan-allow"
   done < "$tmp/mdlist"
