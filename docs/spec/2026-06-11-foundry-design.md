@@ -39,7 +39,6 @@ foundry/                              repo root
     SKILL.md                          plugin format, relative reference paths
     .claude-plugin/plugin.json        plugin manifest, skills points at ./skills/
     agents/openai.yaml                Codex config (agentskills.io format)
-    agents/gemini.yaml                Gemini config
     assets/                           icon png and svg
     references/                       the 12 dense reference files
     scripts/                          executable linters plus their tests

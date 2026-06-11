@@ -1,0 +1,16 @@
+{
+  "note": "Per client skill read paths at project scope. These change between client versions, so verify against the live client before relying on them. install.sh writes the universal copy plus a single Claude symlink only, because every other client reads the universal .agents path directly.",
+  "universal_project_path": ".agents/skills",
+  "install_writes": {
+    "universal": ".agents/skills/foundry",
+    "claude_symlink": ".claude/skills/foundry"
+  },
+  "clients": {
+    "claude-code": { "project_skills": ".claude/skills", "reads_universal_agents_path": false, "reads_agents_md": "via an AGENTS.md import", "rules_file": "CLAUDE.md" },
+    "codex":       { "project_skills": ".agents/skills", "reads_universal_agents_path": true,  "reads_agents_md": true, "rules_file": "AGENTS.md" },
+    "gemini-cli":  { "project_skills": ".agents/skills", "reads_universal_agents_path": true,  "reads_agents_md": true, "rules_file": "GEMINI.md" },
+    "cursor":      { "project_skills": ".agents/skills", "reads_universal_agents_path": true,  "reads_agents_md": true, "rules_file": ".cursor/rules" },
+    "cline":       { "project_skills": ".agents/skills", "reads_universal_agents_path": true,  "reads_agents_md": "partial", "rules_file": ".clinerules" },
+    "copilot":     { "project_skills": null, "reads_universal_agents_path": false, "reads_agents_md": "root file only", "rules_file": ".github/copilot-instructions.md" }
+  }
+}

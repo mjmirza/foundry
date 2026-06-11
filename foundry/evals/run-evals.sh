@@ -46,6 +46,13 @@ for f in "$fx"/mcp/bad/*.json; do
   expect "mcp bad $(basename "$f")" 1 bash "$scripts/check-mcp.sh" "$f"
 done
 
+for f in "$fx"/commands/good/*.md; do
+  expect "command good $(basename "$f")" 0 bash "$scripts/check-command.sh" "$f"
+done
+for f in "$fx"/commands/bad/*.md; do
+  expect "command bad $(basename "$f")" 1 bash "$scripts/check-command.sh" "$f"
+done
+
 # Secret detection. Assemble the fixture at runtime so no secret is committed.
 tmp="$(mktemp 2>/dev/null || echo /tmp/foundry-eval-$$.json)"
 fake="sk-$(printf '%040d' 0 | tr '0' 'A')"

@@ -5,9 +5,16 @@ on:
     branches: [main]
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   verify:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # BESTPRACTICE_OK pinned to a 40 char commit sha for v4.3.1, the supply chain rule Foundry teaches
 
@@ -18,6 +25,14 @@ jobs:
             bash -n "$s" || { echo "syntax error in $s"; fail=1; }
           done < <(find foundry -name '*.sh')
           exit "$fail"
+
+      - name: Shellcheck
+        run: |
+          if command -v shellcheck >/dev/null 2>&1; then
+            find foundry -name '*.sh' -print0 | xargs -0 shellcheck
+          else
+            echo "shellcheck not present on this runner, skipping"
+          fi
 
       - name: Doctor
         run: bash foundry/scripts/doctor.sh

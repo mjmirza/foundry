@@ -9,14 +9,14 @@ This table is a starting map. Paths and read support change between client versi
 | Assistant | Project skills path | Reads AGENTS.md | Rules file |
 |---|---|---|---|
 | Claude Code | `.claude/skills/` | via an AGENTS.md import | `CLAUDE.md` and the rules directory |
-| Codex | `.agents/skills/` (also `.codex/`) | yes, native | `AGENTS.md` |
-| Gemini CLI | `.gemini/skills/` | yes | `GEMINI.md` |
-| Cursor | `.cursor/skills/`, tolerates `.agents/` | yes | `.cursor/rules/` |
-| Cline | `.cline/skills/`, tolerates `.claude/skills/` | partial | `.clinerules/` |
-| Copilot | repo conventions | yes, root only, no nesting | `.github/copilot-instructions.md` |
+| Codex | `.agents/skills/` | yes, native | `AGENTS.md` |
+| Gemini CLI | `.agents/skills/` | yes | `GEMINI.md` |
+| Cursor | `.agents/skills/`, also `.cursor/skills/` | yes | `.cursor/rules/` |
+| Cline | `.agents/skills/` | partial | `.clinerules/` |
+| Copilot | none, an instructions file only | yes, the root file only | `.github/copilot-instructions.md` |
 | Continue | source controlled rules | yes | rules under version control |
 
-The user level paths follow the same shape with the home directory in front of the project path, for example the Claude user path is the home claude skills directory. Verify these too.
+The shape is simple. Every client reads the universal `.agents/skills/` path at project scope except Claude Code, which reads `.claude/skills/`, and Copilot, which uses an instructions file rather than the skill format. The user level paths follow the same shape with the home directory in front of the project path. Verify these too. The machine readable version of this map lives at `data/install-paths.json`, so the installer and the docs do not drift.
 
 ## AGENTS.md is the widest standard
 
@@ -24,7 +24,7 @@ A large and growing set of tools reads AGENTS.md at the repo root, including Cod
 
 ## Write once, install everywhere, with the right symlink
 
-The single most reported portability bug is installing to one path and not the other. Write the universal copy under the `.agents` convention and also create the assistant specific symlink, for example the claude skills path, so both lookup paths resolve to one set of files. Installing to the universal path alone produces a skill not found error on the client that reads the specific path.
+The single most reported portability bug is installing to one path and leaving the other client unable to find the skill. Write the universal copy under the `.agents/skills/` convention, which Codex, Gemini, Cursor, and Cline all read directly, and add one symlink at `.claude/skills/` for Claude Code, the one client that does not read the universal path. That is exactly what Foundry's own `install.sh` does. Do not create a symlink at a path a client does not read, that is the defect in reverse, and do not install only the universal copy and leave Claude with a skill not found.
 
 ## Keep one source, generate the rest
 

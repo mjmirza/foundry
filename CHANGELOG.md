@@ -4,6 +4,27 @@ All notable changes to Foundry are recorded here. The format follows Keep a Chan
 
 ## Unreleased
 
+## 0.3.0 (2026-06-11)
+
+After a three way adversarial audit, this release fixes real defects the audit found and closes the missing angles.
+
+### Added
+
+- check-command.sh, a fourth linter for slash commands, with good and bad fixtures and harness wiring.
+- data/install-paths.json, a machine readable per client path map, so the installer and the docs cannot drift.
+- A SECURITY.md disclosure policy, issue and pull request templates, CODEOWNERS, FUNDING, and an editorconfig.
+- An examples directory with a real before and after produced by the hook linter.
+- A foundry-check slash command that routes to the right linter.
+- CI now runs on Ubuntu and macOS and adds a shellcheck step, with a least privilege permissions block. The macOS leg proves the BSD versus GNU rule the skill teaches.
+
+### Fixed
+
+- The installer was not actually non destructive. The rsync delete flag could remove a file placed in the install, and a foreign symlink at the client path was clobbered with no backup. The installer now never deletes, backs up any foreign file or symlink, and refreshes its own managed copy in place. Reproduced and proven by the integration test.
+- The installer created symlinks at paths some clients do not read, and produced a duplicate skill with an unexpandable variable once installed. It now writes the universal copy plus the single Claude symlink, and excludes the nested skills format copy with an anchored pattern.
+- The install path matrix was wrong on several clients and was called verified while being unverified. Corrected to the surveyed reality and reworded across the README, the changelog, and portability.md.
+- Doctor handles a single skill install layout and uses if then else rather than a chained and or.
+- Shellcheck is clean across every script.
+
 ## 0.2.0 (2026-06-11)
 
 ### Added
@@ -29,5 +50,5 @@ All notable changes to Foundry are recorded here. The format follows Keep a Chan
 - Three executable linters, check-skill, check-hook, and check-mcp, each following the same hook standard Foundry teaches.
 - An eval harness with good and bad fixtures that proves the linters catch every bad fixture and pass every good one, with secret shaped fixtures assembled at runtime.
 - Cross assistant packaging. A Claude Code marketplace manifest, a plugin manifest, and a Codex agent config.
-- A verified install path matrix across Claude Code, Codex, Gemini CLI, Cursor, Cline, and Copilot.
+- A surveyed install path matrix across Claude Code, Codex, Gemini CLI, Cursor, Cline, and Copilot.
 - Enterprise documentation. README, AGENTS.md, ARCHITECTURE, CONTRIBUTING, CODE_OF_CONDUCT, the design spec, and a community coverage map.
