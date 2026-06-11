@@ -5,7 +5,7 @@ license: MIT
 argument-hint: "[mode or focus area]"
 metadata:
   author: Mirza Iqbal
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 Review and build agentic tooling for correctness, portability, safety, and token cost. Report only genuine problems. Do not nitpick, do not invent issues, and do not rewrite the user's working code unless they ask for the fix to be applied.

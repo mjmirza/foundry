@@ -8,7 +8,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/license-MIT-B45309.svg" alt="MIT License" />
-  <img src="https://img.shields.io/badge/version-0.1.0-7C2D12.svg" alt="Version 0.1.0" />
+  <img src="https://img.shields.io/badge/version-0.2.0-7C2D12.svg" alt="Version 0.2.0" />
   <img src="https://img.shields.io/badge/format-Agent%20Skill-B45309.svg" alt="Agent Skills format" />
   <img src="https://img.shields.io/badge/works%20with-Claude%20%C2%B7%20Codex%20%C2%B7%20Gemini%20%C2%B7%20Cursor%20%C2%B7%20Cline%20%C2%B7%20Copilot-7C2D12.svg" alt="Works with many assistants" />
 </p>
@@ -98,6 +98,8 @@ Use the Foundry skill to check my MCP server setup.
 
 - It ships executable linters, not only prose. `check-skill.sh`, `check-hook.sh`, and `check-mcp.sh` catch the common mistakes in your own tooling.
 - It ships an eval harness that proves the guidance is enforceable. The linters are run against good and bad fixtures and must catch every bad one and pass every good one.
+- It ships a correct installer and a doctor. install.sh writes the single universal copy and the per assistant symlink without ever clobbering your files, and doctor checks an install is healthy.
+- It is deep tested. An end to end test runs the real install, doctor, and linter commands in sequence and asserts the artifacts they produce, not only that they exit cleanly.
 - It carries a verified install path matrix across assistants, the most reported and least solved problem in the field.
 - It is built from real community requests. The reference files answer the open issues and pull requests of the top agent tooling repos, not a guess at what matters.
 
@@ -107,7 +109,10 @@ Use the Foundry skill to check my MCP server setup.
 bash foundry/scripts/check-hook.sh path/to/your/hook.sh
 bash foundry/scripts/check-skill.sh path/to/your/skill-dir
 bash foundry/scripts/check-mcp.sh path/to/your/mcp-config.json
-bash foundry/evals/run-evals.sh        # prove the linters themselves work
+bash foundry/scripts/doctor.sh                 # health check this checkout or an install
+bash foundry/install.sh --project              # install correctly into the current project
+bash foundry/evals/run-evals.sh                # unit checks, prove the linters work
+bash foundry/evals/integration.sh              # deep end to end, run the real commands and verify
 ```
 
 ## Built from the community

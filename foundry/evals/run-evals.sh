@@ -53,6 +53,21 @@ printf '{ "mcpServers": { "x": { "command": "node", "args": ["s.js"], "env": { "
 expect "mcp bad assembled-secret" 1 bash "$scripts/check-mcp.sh" "$tmp"
 rm -f "$tmp"
 
+# Health check. This checkout must pass doctor.
+expect "doctor on this checkout" 0 bash "$scripts/doctor.sh"
+
+# Installer smoke. Install into a temp root, then confirm the universal copy and
+# a per assistant symlink both resolve. Clean up afterward.
+itmp="$(mktemp -d 2>/dev/null || echo "/tmp/foundry-install-$$")"
+mkdir -p "$itmp"
+bash "$scripts/../install.sh" --root "$itmp" >/dev/null 2>&1
+if [ -f "$itmp/.agents/skills/foundry/SKILL.md" ] && [ -L "$itmp/.claude/skills/foundry" ] && [ -e "$itmp/.claude/skills/foundry/SKILL.md" ]; then
+  pass=$((pass + 1)); printf 'ok    installer writes the universal copy and a working symlink\n'
+else
+  fail=$((fail + 1)); printf 'FAIL  installer did not produce the universal copy plus a working symlink\n'
+fi
+rm -rf "$itmp"
+
 printf '\nfoundry evals: %s passed, %s failed\n' "$pass" "$fail"
 [ "$fail" -eq 0 ] || exit 1
 exit 0
