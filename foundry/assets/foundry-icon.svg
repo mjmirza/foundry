@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-label="Foundry">
+  <rect x="8" y="8" width="240" height="240" rx="48" fill="#B45309"/>
+  <rect x="8" y="8" width="240" height="240" rx="48" fill="none" stroke="#7C2D12" stroke-width="4"/>
+  <!-- stylized anvil -->
+  <g fill="#FFF7ED">
+    <path d="M64 116 h128 a8 8 0 0 1 8 8 v6 a18 18 0 0 1 -18 18 h-44 l0 8 h22 a6 6 0 0 1 6 6 v4 H94 v-4 a6 6 0 0 1 6 -6 h22 l0 -8 H82 a18 18 0 0 1 -18 -18 z"/>
+    <path d="M168 96 h26 a6 6 0 0 1 6 6 v8 h-44 a26 26 0 0 1 12 -14 z"/>
+  </g>
+  <rect x="96" y="178" width="64" height="14" rx="4" fill="#7C2D12"/>
+</svg>
