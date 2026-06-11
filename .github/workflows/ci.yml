@@ -1,0 +1,29 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # BESTPRACTICE_OK pinned to a 40 char commit sha for v4.3.1, the supply chain rule Foundry teaches
+
+      - name: Shell syntax check
+        run: |
+          fail=0
+          while IFS= read -r s; do
+            bash -n "$s" || { echo "syntax error in $s"; fail=1; }
+          done < <(find foundry -name '*.sh')
+          exit "$fail"
+
+      - name: Doctor
+        run: bash foundry/scripts/doctor.sh
+
+      - name: Evals
+        run: bash foundry/evals/run-evals.sh
+
+      - name: Integration
+        run: bash foundry/evals/integration.sh

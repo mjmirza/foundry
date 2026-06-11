@@ -43,7 +43,9 @@ The three scripts under `scripts/` turn the highest value rules into runnable ch
 
 ## The evals
 
-`evals/run-evals.sh` runs every linter against a corpus of good and bad fixtures and asserts that each bad fixture is caught and each good fixture passes. Any secret shaped fixture is assembled at runtime, so no secret is committed. This is the proof that the guidance is enforceable rather than only asserted. The wrapper at `scripts/tests/run-tests.sh` runs the same harness.
+`evals/run-evals.sh` runs every linter against a corpus of good and bad fixtures and asserts that each bad fixture is caught and each good fixture passes. Any secret shaped fixture is assembled at runtime, so no secret is committed. This is the proof that the guidance is enforceable rather than only asserted.
+
+`evals/integration.sh` is the deep end to end test. It installs Foundry into a sandbox with `install.sh`, then runs `doctor.sh` and the eval harness from the installed copy, checks that a dry run changes nothing, that a file already in the way is backed up rather than deleted, that a re install is idempotent, and that the linters flag real bad inputs and pass real good ones. It runs the real commands in sequence and asserts the artifacts they produce. `scripts/doctor.sh` is the health check for a checkout or an install. `scripts/tests/run-tests.sh` runs the unit harness and the integration test together, and the CI workflow runs both on every push and pull request.
 
 ## Version sync
 
