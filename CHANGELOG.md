@@ -4,6 +4,16 @@ All notable changes to Foundry are recorded here. The format follows Keep a Chan
 
 ## Unreleased
 
+## 0.4.2 (2026-06-11)
+
+### Added
+
+- A What you get section that states the value in outcome terms, the bugs it prevents and the hour it saves, before the machinery, and a three step from install to first win walk so a reader gets a real review of their own code in three commands.
+
+### Changed
+
+- Dropped the hard coded version badge that drifted out of sync, the npm badge already shows the live version. Updated the checks count.
+
 ## 0.4.1 (2026-06-11)
 
 ### Fixed

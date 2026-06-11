@@ -4,7 +4,7 @@ description: Reviews and builds agentic tooling to best practice across any AI c
 license: MIT
 metadata:
   author: Mirza Iqbal
-  version: "0.4.1"
+  version: "0.4.2"
 ---
 
 Review and build agentic tooling for correctness, portability, safety, and token cost. Report only genuine problems. Do not nitpick, do not invent issues, and do not rewrite the user's working code unless they ask for the fix to be applied.
