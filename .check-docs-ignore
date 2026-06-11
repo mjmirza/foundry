@@ -1,0 +1,3 @@
+# Paths excluded from the markdown hygiene check, one substring per line.
+# Test fixtures hold deliberately broken docs.
+evals/fixtures/

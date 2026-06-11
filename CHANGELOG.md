@@ -4,6 +4,18 @@ All notable changes to Foundry are recorded here. The format follows Keep a Chan
 
 ## Unreleased
 
+## 0.4.0 (2026-06-11)
+
+### Added
+
+- check-docs.sh, a deep markdown hygiene checker. It finds broken local links, broken heading anchors, missing images, and orphan docs that nothing references. The orphan pass is the part most link checkers lack, the docs equivalent of dead code, and it is anchor slug aware and skill dir aware so a `${CLAUDE_SKILL_DIR}` reference path resolves. It honors a `.check-docs-ignore` for excluded paths and a `.docs-orphan-allow` for intentionally standalone files.
+- A docs hygiene block in the eval harness that builds a clean set and a broken set at runtime and asserts each verdict, plus a Docs hygiene step in CI on both Ubuntu and macOS.
+- A reference rule in the documentation reference that every doc must be reachable from another doc, so a markdown file never sits disconnected.
+
+### Fixed
+
+- The orphan pass now treats a real markdown link as a reachability signal, so a bare same directory link such as `guide.md` no longer falsely flags its target as an orphan, while inline code reference paths are still honored for skill bodies.
+
 ## 0.3.1 (2026-06-11)
 
 ### Added

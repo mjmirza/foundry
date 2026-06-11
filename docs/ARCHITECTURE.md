@@ -1,6 +1,6 @@
 # Architecture
 
-How Foundry is laid out and why. The shape follows the proven SwiftUI Agent Skill packaging, with three additions. A wider reference set, executable linters, and an eval harness.
+How Foundry is laid out and why. The shape follows the proven SwiftUI Agent Skill packaging, with three additions. A wider reference set, executable linters, and an eval harness. The original design record is in `spec/2026-06-11-foundry-design.md`.
 
 ## Repository layout
 
@@ -19,8 +19,8 @@ foundry/                              repo root
     agents/openai.yaml                Codex config in the agentskills.io format
     assets/                           the square icon
     references/                       the 12 reference files
-    scripts/                          the four linters plus doctor
-      check-skill.sh check-hook.sh check-mcp.sh check-command.sh doctor.sh
+    scripts/                          the four linters, the docs checker, plus doctor
+      check-skill.sh check-hook.sh check-mcp.sh check-command.sh check-docs.sh doctor.sh
       tests/run-tests.sh              runs the unit harness and the integration test
     evals/                            the harness, the integration test, and fixtures
       run-evals.sh  integration.sh
@@ -42,7 +42,7 @@ The skill body is a thin router. It decides which reference to load for the arti
 
 ## The linters
 
-The four scripts under `scripts/`, check-skill, check-hook, check-mcp, and check-command, turn the highest value rules into runnable checks. Each one reads a target, prints findings in the review format, exits 0 when clean, exits 1 on a finding, and fails open when its input cannot be read. The linters follow the same hook standard Foundry teaches, so they are their own first example.
+The scripts under `scripts/`, check-skill, check-hook, check-mcp, check-command, and check-docs, turn the highest value rules into runnable checks. Each one reads a target, prints findings in the review format, exits 0 when clean, exits 1 on a finding, and fails open when its input cannot be read. The linters follow the same hook standard Foundry teaches, so they are their own first example. check-docs is the markdown hygiene checker. It finds broken links, broken heading anchors, missing images, and orphan docs that nothing references, the docs equivalent of dead code.
 
 ## The evals
 

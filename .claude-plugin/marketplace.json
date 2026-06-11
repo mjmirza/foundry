@@ -3,14 +3,14 @@
   "owner": { "name": "Mirza Iqbal" },
   "metadata": {
     "description": "A portable agent skill that makes any AI coding assistant an expert at building agentic tooling: skills, hooks, MCP servers, subagents, commands, context engineering, and security.",
-    "version": "0.3.1"
+    "version": "0.4.0"
   },
   "plugins": [
     {
       "name": "foundry",
       "source": "./foundry",
       "description": "Reviews and builds agentic tooling to best practice across any AI coding assistant. Catches the mistakes assistants actually make when writing skills, hooks, MCP servers, subagents, and commands.",
-      "version": "0.3.1",
+      "version": "0.4.0",
       "author": { "name": "Mirza Iqbal" },
       "homepage": "https://github.com/mjmirza/foundry",
       "repository": "https://github.com/mjmirza/foundry",
