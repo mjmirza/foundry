@@ -15,6 +15,7 @@ After a three way adversarial audit, this release fixes real defects the audit f
 - A SECURITY.md disclosure policy, issue and pull request templates, CODEOWNERS, FUNDING, and an editorconfig.
 - An examples directory with a real before and after produced by the hook linter.
 - A foundry-check slash command that routes to the right linter.
+- Published to npm as @nex8n/foundry. Run npx @nex8n/foundry to install the skill into a project. A package.json and a node launcher at bin/foundry.js wrap the installer.
 - CI now runs on Ubuntu and macOS and adds a shellcheck step, with a least privilege permissions block. The macOS leg proves the BSD versus GNU rule the skill teaches.
 
 ### Fixed

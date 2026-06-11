@@ -8,6 +8,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/license-MIT-B45309.svg" alt="MIT License" />
+  <a href="https://www.npmjs.com/package/@nex8n/foundry"><img src="https://img.shields.io/npm/v/@nex8n/foundry.svg?color=B45309" alt="npm @nex8n/foundry" /></a>
   <img src="https://img.shields.io/badge/version-0.3.0-7C2D12.svg" alt="Version 0.3.0" />
   <img src="https://img.shields.io/badge/tests-35%20checks%20passing-2E7D32.svg" alt="35 checks passing" />
   <img src="https://img.shields.io/badge/format-Agent%20Skill-B45309.svg" alt="Agent Skills format" />
@@ -53,6 +54,12 @@ Install into Claude Code, Codex, Gemini, Cursor, and more with the skills instal
 
 ```bash
 npx skills add https://github.com/mjmirza/foundry --skill foundry
+```
+
+Or install it straight from npm, which runs the same non destructive installer and drops the skill into the current project.
+
+```bash
+npx @nex8n/foundry
 ```
 
 If `npx` is missing you need Node. On a Mac, `brew install node`.
