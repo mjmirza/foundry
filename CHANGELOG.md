@@ -4,6 +4,16 @@ All notable changes to Foundry are recorded here. The format follows Keep a Chan
 
 ## Unreleased
 
+## 0.3.1 (2026-06-11)
+
+### Added
+
+- A GitHub Actions publish workflow that runs npm publish with provenance and OIDC, so the package is signed and linked to its source commit and the workflow that built it. It runs on a GitHub Release.
+
+### Changed
+
+- The published npm package now carries npm provenance.
+
 ## 0.3.0 (2026-06-11)
 
 After a three way adversarial audit, this release fixes real defects the audit found and closes the missing angles.
