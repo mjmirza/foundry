@@ -1,6 +1,6 @@
 {
   "name": "@nex8n/foundry",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "The agent skill that makes any AI coding assistant an expert at building agentic tooling. Run npx @nex8n/foundry to install it into your project.",
   "bin": {
     "foundry-skill": "bin/foundry.js"

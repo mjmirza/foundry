@@ -50,3 +50,6 @@ jobs:
 
       - name: Integration
         run: bash foundry/evals/integration.sh
+
+      - name: Docs hygiene
+        run: bash foundry/scripts/check-docs.sh .

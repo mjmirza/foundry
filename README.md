@@ -105,6 +105,7 @@ Use the Foundry skill to check my MCP server setup.
 ## What makes Foundry different
 
 - It ships executable linters, not only prose. `check-skill.sh`, `check-hook.sh`, `check-mcp.sh`, and `check-command.sh` catch the common mistakes in your own tooling.
+- It ships markdown hygiene as a first class check. `check-docs.sh` finds broken links, broken heading anchors, missing images, and orphan docs that nothing references. The orphan pass is the docs equivalent of dead code, so a markdown file never sits disconnected from the rest.
 - It ships an eval harness that proves the guidance is enforceable. The linters are run against good and bad fixtures and must catch every bad one and pass every good one.
 - It ships a correct installer and a doctor. install.sh writes the single universal copy and the per assistant symlink without ever clobbering your files, and doctor checks an install is healthy.
 - It is deep tested. An end to end test runs the real install, doctor, and linter commands in sequence and asserts the artifacts they produce, not only that they exit cleanly.
@@ -130,6 +131,7 @@ bash foundry/scripts/check-hook.sh path/to/your/hook.sh
 bash foundry/scripts/check-skill.sh path/to/your/skill-dir
 bash foundry/scripts/check-mcp.sh path/to/your/mcp-config.json
 bash foundry/scripts/check-command.sh path/to/your/command.md
+bash foundry/scripts/check-docs.sh .           # markdown hygiene, broken links and orphan docs
 bash foundry/scripts/doctor.sh                 # health check this checkout or an install
 bash foundry/install.sh --project              # install correctly into the current project
 bash foundry/evals/run-evals.sh                # unit checks, prove the linters work
@@ -138,7 +140,7 @@ bash foundry/evals/integration.sh              # deep end to end, run the real c
 
 ## Built from the community
 
-Foundry's reference content is traced back to real asks across the top repos in Cursor rules, Claude Code resources, MCP, and the AGENTS.md standard. See `docs/COVERAGE.md` for the map from a community request to the Foundry rule that answers it.
+Foundry's reference content is traced back to real asks across the top repos in Cursor rules, Claude Code resources, MCP, and the AGENTS.md standard. See `docs/COVERAGE.md` for the map from a community request to the Foundry rule that answers it, and `docs/RESEARCH.md` for the repo and gap view.
 
 ## Contributing
 

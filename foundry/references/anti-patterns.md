@@ -132,6 +132,15 @@ Other packaging mistakes to flag.
 - A slash command with no `description` in its frontmatter. It will not appear in autocomplete. Add the description, and an argument hint where useful.
 - Defaulting a marketplace clone to SSH. Default to HTTPS so it does not trigger a key prompt or fail in a non interactive run.
 
+## Documentation hygiene
+
+Markdown rots the same way code does, and the rot is invisible because a broken doc still renders.
+
+- A markdown link to a file that was moved or renamed. It renders as a link and 404s on click. Resolve every local link target to a real file. `check-docs.sh` does this.
+- A heading anchor link, `[x](guide.md#section)`, that points at a heading the target no longer has. Slugify the target's headings and confirm the anchor exists.
+- An orphan doc. A markdown file that no other doc links to or references. It is the docs equivalent of dead code, and a reader never finds it. Every doc must be reachable from another doc, by a markdown link or a referenced path. If a file is intentionally standalone, an entry point or a convention file, record it in `.docs-orphan-allow` rather than leaving it unreferenced.
+- Leave alone. Test fixtures and generated docs hold deliberately broken or unreferenced markdown. Exclude them with `.check-docs-ignore` so the hygiene check does not fight your fixtures.
+
 ## The meta mistakes
 
 - Confident wrong guidance. A real reference repo once shipped advice that was backwards. Verify before you assert.

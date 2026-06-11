@@ -53,6 +53,20 @@ for f in "$fx"/commands/bad/*.md; do
   expect "command bad $(basename "$f")" 1 bash "$scripts/check-command.sh" "$f"
 done
 
+# Docs hygiene. Build a clean set and a broken set at runtime, so no broken
+# markdown is ever committed.
+dtmp="$(mktemp -d 2>/dev/null || echo "/tmp/foundry-docs-$$")"
+mkdir -p "$dtmp/good"
+printf '# Home\n\nSee [the guide](guide.md).\n' > "$dtmp/good/README.md"
+printf '# Guide\n\nReal content here.\n' > "$dtmp/good/guide.md"
+expect "docs good set is clean" 0 bash "$scripts/check-docs.sh" "$dtmp/good"
+mkdir -p "$dtmp/bad"
+printf '# Home\n\nSee [missing](nope.md) and [bad anchor](guide.md#nope).\n' > "$dtmp/bad/README.md"
+printf '# Guide\n\nReal content here.\n' > "$dtmp/bad/guide.md"
+printf '# Orphan\n\nNobody references this doc.\n' > "$dtmp/bad/orphan.md"
+expect "docs bad set is caught" 1 bash "$scripts/check-docs.sh" "$dtmp/bad"
+rm -rf "$dtmp"
+
 # Secret detection. Assemble the fixture at runtime so no secret is committed.
 tmp="$(mktemp 2>/dev/null || echo /tmp/foundry-eval-$$.json)"
 fake="sk-$(printf '%040d' 0 | tr '0' 'A')"

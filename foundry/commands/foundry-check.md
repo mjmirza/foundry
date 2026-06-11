@@ -12,6 +12,7 @@ Pick the linter by the target.
 - A skill directory or a `SKILL.md`, use `scripts/check-skill.sh`.
 - An MCP config, a `.json` with an `mcpServers` block, use `scripts/check-mcp.sh`.
 - A slash command, a `.md` with frontmatter, use `scripts/check-command.sh`.
+- A documentation directory or a tree of markdown, use `scripts/check-docs.sh` to find broken links and orphan docs.
 
 The scripts live inside the installed Foundry skill, under the `.agents/skills/foundry` or `.claude/skills/foundry` path, or under `foundry/scripts` in a repo checkout. Run the chosen linter on the argument.
 
