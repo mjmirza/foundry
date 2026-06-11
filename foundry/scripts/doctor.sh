@@ -21,6 +21,16 @@ for r in principles skills hooks mcp-servers subagents commands context-engineer
 done
 if [ "$missing" -eq 0 ]; then ok "all 12 references present"; fi
 
+# No orphan references. Every reference file must be linked from the skill body,
+# so a dead reference cannot accumulate. This is the hygiene gate for the docs.
+orphan=0
+for rf in "$skill"/references/*.md; do
+  [ -e "$rf" ] || continue
+  b="$(basename "$rf")"
+  if ! grep -q "$b" "$skill/SKILL.md"; then note "orphan reference, not linked from SKILL.md, $b"; orphan=1; fi
+done
+if [ "$orphan" -eq 0 ]; then ok "no orphan references"; fi
+
 # The nested skills format layout is optional. It exists in a source checkout and
 # is absent in a single skill install.
 have_skills_format=0

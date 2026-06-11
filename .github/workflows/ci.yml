@@ -34,6 +34,14 @@ jobs:
             echo "shellcheck not present on this runner, skipping"
           fi
 
+      - name: JS launcher parse check
+        run: |
+          if command -v node >/dev/null 2>&1; then
+            for j in bin/*.js; do node --check "$j"; done
+          else
+            echo "node not present, skipping the js parse check"
+          fi
+
       - name: Doctor
         run: bash foundry/scripts/doctor.sh
 
