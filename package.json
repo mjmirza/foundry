@@ -1,0 +1,45 @@
+{
+  "name": "@nex8n/foundry",
+  "version": "0.3.0",
+  "description": "The agent skill that makes any AI coding assistant an expert at building agentic tooling. Run npx @nex8n/foundry to install it into your project.",
+  "bin": {
+    "foundry-skill": "bin/foundry.js"
+  },
+  "files": [
+    "bin/",
+    "foundry/",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "test": "bash foundry/scripts/tests/run-tests.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mjmirza/foundry.git"
+  },
+  "homepage": "https://github.com/mjmirza/foundry#readme",
+  "bugs": {
+    "url": "https://github.com/mjmirza/foundry/issues"
+  },
+  "keywords": [
+    "agent-skill",
+    "claude-code",
+    "codex",
+    "gemini",
+    "cursor",
+    "cline",
+    "mcp",
+    "hooks",
+    "subagents",
+    "agentic",
+    "ai-coding",
+    "skill"
+  ],
+  "author": "Mirza Iqbal",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}
