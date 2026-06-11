@@ -60,11 +60,36 @@ mkdir -p "$dtmp/good"
 printf '# Home\n\nSee [the guide](guide.md).\n' > "$dtmp/good/README.md"
 printf '# Guide\n\nReal content here.\n' > "$dtmp/good/guide.md"
 expect "docs good set is clean" 0 bash "$scripts/check-docs.sh" "$dtmp/good"
+
+# Regression. A multi heading doc with a valid table of contents of anchors must
+# pass. This is the case that the slug newline, the pipefail grep early exit, and
+# the consecutive dash slug mismatch all turned into false broken anchors. A bare
+# word placeholder in a syntax example must not be read as a broken link.
+mkdir -p "$dtmp/anchors"
+{
+  printf '# Title\n\n'
+  printf -- '- [1. First Section](#1-first-section)\n'
+  printf -- '- [Second, With Comma](#second-with-comma)\n'
+  printf -- '- [Third Section](#third-section)\n\n'
+  printf 'Embed an image like ![alt](url) in your doc.\n\n'
+  printf '## 1. First Section\n\nbody\n\n'
+  printf '## Second, With Comma\n\nbody\n\n'
+  printf '## Third Section\n\nbody\n'
+} > "$dtmp/anchors/README.md"
+expect "docs valid TOC anchors and placeholder pass" 0 bash "$scripts/check-docs.sh" "$dtmp/anchors"
+
 mkdir -p "$dtmp/bad"
 printf '# Home\n\nSee [missing](nope.md) and [bad anchor](guide.md#nope).\n' > "$dtmp/bad/README.md"
 printf '# Guide\n\nReal content here.\n' > "$dtmp/bad/guide.md"
 printf '# Orphan\n\nNobody references this doc.\n' > "$dtmp/bad/orphan.md"
 expect "docs bad set is caught" 1 bash "$scripts/check-docs.sh" "$dtmp/bad"
+
+# An allow entry ending in a slash exempts a whole subtree from the orphan pass.
+mkdir -p "$dtmp/allow/archive"
+printf '# Home\n\nNo links.\n' > "$dtmp/allow/README.md"
+printf '# Snapshot\n\nStandalone archival doc.\n' > "$dtmp/allow/archive/snap.md"
+printf 'archive/\n' > "$dtmp/allow/.docs-orphan-allow"
+expect "subtree orphan allow exempts a tree" 0 bash "$scripts/check-docs.sh" "$dtmp/allow"
 rm -rf "$dtmp"
 
 # Secret detection. Assemble the fixture at runtime so no secret is committed.
