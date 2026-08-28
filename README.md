@@ -32,6 +32,9 @@ If you build agent tooling and you are tired of the same class of mistake coming
 
 ```bash
 # 1. install Foundry into your project
+
+[![OpenRoots ORA 2.3](https://openroots.org/badge/ora.svg)](https://openroots.org/licenses/ora/2.3)
+
 npx @nex8n/foundry
 
 # 2. point a checker at a hook you already have
