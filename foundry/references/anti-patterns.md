@@ -132,6 +132,18 @@ Other packaging mistakes to flag.
 - A slash command with no `description` in its frontmatter. It will not appear in autocomplete. Add the description, and an argument hint where useful.
 - Defaulting a marketplace clone to SSH. Default to HTTPS so it does not trigger a key prompt or fail in a non interactive run.
 
+## Measurement and status
+
+The most expensive class of tooling bug is one that reports success because it measured nothing.
+
+- Reading empty output as a clean result. A command that failed and a command that found nothing both print nothing. Check the exit code, or require a positive signal such as a count field that only exists when the tool really ran.
+- A status read from a store nothing writes. A scanner computed real severity counts and sent them only to a log, while its status command read a state file that was never updated, so it reported zero findings while the audit it wrapped found critical ones. Test the pipeline end to end. Fake the external tool, run the real scanner, and assert on what status prints.
+- Counting a nested report by walking every object. An audit report repeats severity inside each advisory path, so a deep walk over counts. Read the summary block the tool provides.
+- A tool error read as zero matches. A search that errors and a search with no hits are different results. Treat the error as a failed search and retry or switch method.
+- Fingerprinting a web page by hashing its raw HTML. Build ids, nonces, and timestamps change on every fetch, so the check flags drift on every run and the alert becomes noise nobody reads. Hash only the thing you track, for example the sorted set of command names in the visible text.
+- Tracking a background job by matching its command line. The watcher's own command line contains the pattern, so it finds itself and waits forever, and a name based kill can kill the shell issuing it. Track by process id.
+- Leave alone. A deliberate dry run that prints nothing by design, or a probe whose silence is its documented success signal. Confirm the contract before adding a positive check.
+
 ## Documentation hygiene
 
 Markdown rots the same way code does, and the rot is invisible because a broken doc still renders.

@@ -4,6 +4,15 @@ All notable changes to Foundry are recorded here. The format follows Keep a Chan
 
 ## Unreleased
 
+## 0.4.3 (2026-10-31)
+
+### Added
+
+- A Measurement and status section in the anti-patterns reference. Empty output read as clean, a status read from a store nothing writes, deep walks that over count audit reports, tool errors read as zero matches, raw HTML hashing that flags drift every run, and tracking a job by matching its own command line.
+- Hook contract changes to design for. Rewritten input must match the tool schema, a failed hook now refuses a blockable action, PreCompact output is truncated, and Bash hooks see background monitor commands.
+- MCP registration and permission guidance. Verify with the client's own list command, spell scopes with the full server name, and point at the final endpoint because redirects are not followed.
+- A default subagent effort, and a per project write fence that does not replace shell guards.
+
 ## 0.4.2 (2026-06-11)
 
 ### Added
