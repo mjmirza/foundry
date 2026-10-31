@@ -68,6 +68,13 @@ file="$(printf '%s' "$payload" | jq -r '.tool_input.file_path // empty')"
 - Multi hook PreToolUse ordering, and whether one hook sees another's rewritten input, are unspecified. Design each hook to stand alone.
 - A subagent or skill does not inherit the user's settings permissions. Re declare the needed allow rules.
 
+## Contract changes to design for
+
+- A rewritten input must match the target tool's input schema. Unknown fields are dropped and an invalid input denies the call. Test every rewrite against the real schema, not a guess of it.
+- A hook that fails to run or returns malformed output now refuses a blockable action instead of letting it through. Return small, valid output every time and never rely on the host to fail open for you.
+- PreCompact output is truncated per hook (10,000 characters in Claude Code). Persist full recovery state to a file and print only its path and a one line summary.
+- A Bash matching hook also sees commands started by a background monitor. It can block or ask there, but it cannot approve or rewrite them. Keep enforcement in the Bash hook rather than inventing a new event.
+
 ## Windows and portability
 
 - Use forward slash paths in a bash command. Backslash paths break it.

@@ -29,6 +29,10 @@ A rule may pin the model and the reasoning effort for a task, and should allow a
 - Default a marketplace clone to HTTPS, not SSH.
 - Make plugin and marketplace auto updating configurable, off or on by the user's choice.
 
+## Write boundaries
+
+To keep file edits inside a project, set the write fence in that project's settings (in Claude Code, `permissions.blockWritesOutsideWorkingDirectories`) rather than globally, and add only the directories the work is authorized to touch. It does not constrain shell commands, so keep any shell level guards you already have.
+
 ## Secrets and env
 
 - Keep secrets in a gitignored env location, never in the committed config. Commit an example template only.

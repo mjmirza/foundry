@@ -36,6 +36,12 @@ A server a stranger installs is judged in its first run. Ship one guided setup c
 - Require explicit consent before pulling a local credential such as a git auth token. Never silently use a user credential.
 - Use least privilege scopes for any publish or write token. A broad token that grants more than the task needs is a footgun.
 
+## Registration and permissions
+
+- A server listed in a config file the client does not read is invisible, with no error. Verify with the client's own listing command, for example `claude mcp list`, never by reading the config you wrote.
+- Spell a permission scope with the full normalized server name, `mcp__<server>__*`. A shorter prefix does not grant similarly named servers.
+- Point the client at the final endpoint. Proxy redirects are not followed, so a redirect that worked once silently stops working.
+
 ## Supply chain
 
 - A tool description is model input. Scan tool descriptions at install and again on every update, because a poisoned description is the tool poisoning vector and it is hidden from the UI.

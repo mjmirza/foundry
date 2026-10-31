@@ -22,6 +22,10 @@ A subagent has its own context, so its large intermediate reads do not pollute t
 - A subagent does not inherit the user's settings permissions. Re declare the allow rules it needs, or it will re prompt or stall.
 - The PostToolUse hook does not fire for a subagent or Task completion. Do not rely on a post tool hook to collect subagent output. Collect it from the subagent's returned result instead.
 
+## Effort per subagent
+
+Set a default reasoning effort for subagents that do not name one (in Claude Code, `CLAUDE_CODE_SUBAGENT_EFFORT`), so a routine lookup does not inherit the parent session's expensive tier. Raise it on the individual call for review, debugging, or architecture work.
+
 ## Cost discipline
 
 A fleet of subagents multiplies token spend. Spawn the smallest number that covers the work. Prefer one well scoped finder over five overlapping ones. Name what was dropped if you cap coverage, so a reader is not misled into thinking everything was covered.
